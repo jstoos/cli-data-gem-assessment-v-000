@@ -6,7 +6,7 @@ class Patents::CLI
     find_a_patent
   end
 
-  #Ask the user for a patent number,
+  #Ask the user for a patent number
   def find_a_patent
     input = ""
     number = ""
@@ -20,8 +20,7 @@ class Patents::CLI
       if valid_number?(input)
 
       #Take that number, create a patent instantiation and return a patent title
-       puts "Here's that patent title!"
-       #"Patent number #{input} is entitled: " Scraper.new(number).title
+       puts "Patent number #{input} is entitled: #{Patents::Patent.new(number).title}"
 
        #Offer the user the chance to get information on that patent
        menu
@@ -49,7 +48,7 @@ class Patents::CLI
           number = gets.strip
         end
 
-        #Find the thing they want using Scraper class
+        #Find the thing they want using scraper class (Patent)
         if number == "1"
           puts "Inventors: "
             more_information?
