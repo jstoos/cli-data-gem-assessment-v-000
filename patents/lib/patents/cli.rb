@@ -35,7 +35,13 @@ class Patents::CLI
 
   def menu
      puts "What information would you like about this patent? (Please enter a number)"
-     puts "1. Inventor(s) , 2. Application number, 3. Publication Date, 4. Filing date, 5. Assignee, 6. Primary Class, 7. Enter a New Patent number or exit"
+     puts "1. Inventor(s)"
+     puts "2. Application number"
+     puts "3. Publication Date"
+     puts "4. Filing date"
+     puts "5. Assignee"
+     puts "6. Primary Class"
+     puts "7. Enter a New Patent number or exit"
 
       number = gets.strip
         while !number.to_i.between?(1, 7)
