@@ -20,8 +20,8 @@ class Patents::Patent
     #binding.pry
   end
 
-  def attributes
-    
+  def attributes(attribute, title)
+
     @title = @doc.css(".disp_doc2 .disp_elm_text b").first.text.strip
     @inventor = @doc.xpath('//div[contains(text(),"Inventors:")]/following-sibling::div').text.strip
     @application_number = @doc.xpath('//div[contains(text(),"Application Number:")]/following-sibling::div').text.strip
