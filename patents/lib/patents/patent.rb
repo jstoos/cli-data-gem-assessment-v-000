@@ -8,27 +8,26 @@ class Patents::Patent
     @number = number
     get_page
     attributes
-    title
-    binding.pry
-  end
-
-  def get_page
-    url = "http://www.freepatentsonline.com/#{@number}.html"
-    file = open(url, 'User-Agent' => 'Chrome')
-    #file = open(url)
-    @doc = Nokogiri::HTML(file)
     #binding.pry
   end
 
-  def attributes(attribute, title)
+  def get_page
+    # url = "http://www.freepatentsonline.com/#{@number}.html"
+    # file = open(url, 'User-Agent' => 'Chrome')
+    # @doc = Nokogiri::HTML(file)
+    #binding.pry
+  end
 
-    @title = @doc.css(".disp_doc2 .disp_elm_text b").first.text.strip
-    @inventor = @doc.xpath('//div[contains(text(),"Inventors:")]/following-sibling::div').text.strip
-    @application_number = @doc.xpath('//div[contains(text(),"Application Number:")]/following-sibling::div').text.strip
-    @publication_date = @doc.xpath('//div[contains(text(),"Publication Date:")]/following-sibling::div').text.strip
-    @filing_date = @doc.xpath('//div[contains(text(),"Filing Date:")]/following-sibling::div').text.strip
-    @assignee = @doc.xpath('//div[contains(text(),"Assignee:")]/following-sibling::div').text.strip
-    @primary_class = @doc.xpath('//div[contains(text(),"Primary Class:")]/following-sibling::div').text.strip
+  def attributes
+    @title = "A fake title"
+    @inventor = "A fake inventor"
+    # @title = @doc.css(".disp_doc2 .disp_elm_text b").first.text.strip
+    # @inventor = @doc.xpath('//div[contains(text(),"Inventors:")]/following-sibling::div').text.strip
+    # @application_number = @doc.xpath('//div[contains(text(),"Application Number:")]/following-sibling::div').text.strip
+    # @publication_date = @doc.xpath('//div[contains(text(),"Publication Date:")]/following-sibling::div').text.strip
+    # @filing_date = @doc.xpath('//div[contains(text(),"Filing Date:")]/following-sibling::div').text.strip
+    # @assignee = @doc.xpath('//div[contains(text(),"Assignee:")]/following-sibling::div').text.strip
+    # @primary_class = @doc.xpath('//div[contains(text(),"Primary Class:")]/following-sibling::div').text.strip
   end
 
 end

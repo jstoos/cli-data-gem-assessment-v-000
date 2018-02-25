@@ -2,33 +2,26 @@
 
 class Patents::CLI
 
-  @@attributes = ["Inventor", "Application Number", "Publication Date", "Filing Date", "Assignee", "Primary Class"
-]
+  attr_accessor :current_patent, :attribute
+
+  @@attributes = [["Inventor", "inventor"], ["Application Number", "application_number"], ["Publication Date", "publication_date"], ["Filing Date", "filing_date"], ["Assignee", "assignee"], ["Primary Class", "primary_class"]]
 
   def call
     find_a_patent
   end
 
-  #Ask the user for a patent number
   def find_a_patent
     input = ""
     number = ""
     until input == "exit" do
 
-      puts "Please enter a patent number: (to exit enter 'exit')"
-      #Get the user input of a patent number and strip it
+      puts "Please enter a patent number: (to exit enter 'exit')"    #Ask the user for a patent number
       input = gets.strip
-
-      #Check it is a valid number
-      if valid_number?(input)
-
-      #Take that number, create a patent instantiation and return a patent title
-        puts "Patent number #{input} is entitled:"
-       #puts "Patent number #{input} is entitled: #{Patents::Patent.new(number).title}"
-
-
-       #Offer the user the chance to get information on that patent
-       menu
+      if valid_number?(input) #Check it is a valid number
+        @current_patent = Patents::Patent.new(number) #Take that number, create a patent instantiation
+        puts "Patent number #{input} is entitled: #{current_patent.title}"
+        #puts "Inventor is #{current_patent.inventor}"
+       menu  #Offer the user the chance to get information on that patent
       end #End of if input statement
     end #End of until loop
   end #End of find_a_patent
@@ -42,18 +35,9 @@ class Patents::CLI
     counter = 0
     @@attributes.each do |attribute|
       counter +=1
-      puts "#{counter}. #{attribute}"
+      puts "#{counter}. #{attribute[0]}"
     end
       puts "#{@@attributes.size+1}. Enter a New Patent number or exit"
-
-    #  puts "What information would you like about this patent? (Please enter a number)"
-    #  puts "1. Inventor(s)"
-    #  puts "2. Application number"
-    #  puts "3. Publication Date"
-    #  puts "4. Filing date"
-    #  puts "5. Assignee"
-    #  puts "6. Primary Class"
-    #  puts "7. Enter a New Patent number or exit"
 
       number = gets.strip
         while !number.to_i.between?(1, (@@attributes.size + 1))
@@ -61,30 +45,13 @@ class Patents::CLI
           number = gets.strip
         end
 
-        #Find the thing they want using scraper class (Patent)
-      puts "#{@@attributes[number.to_i-1]}: "
+      current_patent_info = @current_patent.send("#{@@attributes[number.to_i-1][1]}")
+      puts  "#{@@attributes[number.to_i-1][0]}: #{current_patent_info}"
+
       if number.to_i.between?(1, (@@attributes.size))
         more_information?
       end
-        # if number == "1"
-        #   puts "Inventors: "
-        #     more_information?
-        #   elsif number == "2"
-        #     puts "Application number: "
-        #     more_information?
-        #   elsif number == "3"
-        #     puts "Publication Date: "
-        #     more_information?
-        #   elsif number== "4"
-        #     puts "Filing date: "
-        #     more_information?
-        #   elsif number == "5"
-        #     puts "Assignee: "
-        #     more_information?
-        #   elsif number == "6"
-        #     puts "Primary Class: "
-        #     more_information?
-        # end
+
   end
 
   def more_information?
@@ -93,7 +60,7 @@ class Patents::CLI
     if response == "y"
       menu
     elsif response != "n"
-      puts "I don't understand."
+      puts "I don't understand. Would you like more information on this patent? (y/n)"
       more_information?
     end
   end
