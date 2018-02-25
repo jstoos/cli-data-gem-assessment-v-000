@@ -13,16 +13,18 @@ class Patents::CLI
   def find_a_patent
     input = ""
     number = ""
-    until input == "exit" do
 
+    until input == "exit" do
       puts "Please enter a patent number: (to exit enter 'exit')"    #Ask the user for a patent number
       input = gets.strip
+
       if valid_number?(input) #Check it is a valid number
         @current_patent = Patents::Patent.new(number) #Take that number, create a patent instantiation
         puts "Patent number #{input} is entitled: #{current_patent.title}"
         #puts "Inventor is #{current_patent.inventor}"
        menu  #Offer the user the chance to get information on that patent
       end #End of if input statement
+
     end #End of until loop
   end #End of find_a_patent
 
