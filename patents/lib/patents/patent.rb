@@ -29,17 +29,4 @@ class Patents::Patent
     end
   end
 
-  # def attributes
-  #   # @title = "A fake title"
-  #   # @inventor = "A fake inventor"
-  #   #@title = @doc.css(".disp_doc2 .disp_elm_text b").first.text.strip
-  #   @title = @doc.xpath('//div[contains(text(),"Title:")]/following-sibling::div').text.strip
-  #   @inventor = @doc.xpath('//div[contains(text(),"Inventors:")]/following-sibling::div').text.strip
-  #   @application_number = @doc.xpath('//div[contains(text(),"Application Number:")]/following-sibling::div').text.strip
-  #   @publication_date = @doc.xpath('//div[contains(text(),"Publication Date:")]/following-sibling::div').text.strip
-  #   @filing_date = @doc.xpath('//div[contains(text(),"Filing Date:")]/following-sibling::div').text.strip
-  #   @assignee = @doc.xpath('//div[contains(text(),"Assignee:")]/following-sibling::div').text.strip
-  #   @primary_class = @doc.xpath('//div[contains(text(),"Primary Class:")]/following-sibling::div').text.strip
-  # end
-
 end

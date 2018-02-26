@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "patents"
   spec.version       = Patents::VERSION
   spec.authors       = ["'Jennifer Stoos'"]
-  spec.email         = ["'jstoos@bitlaw.com'"]
+  spec.email         = ["not disclosed"]
 
   spec.summary       = %q{Patents takes a patent number and returns requested information about that patent.}
   spec.homepage      = "https://github.com/jstoos"
