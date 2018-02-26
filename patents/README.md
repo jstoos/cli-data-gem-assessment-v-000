@@ -20,7 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
- 
+Run `patents_cli` from your terminal to begin the program.
+
 
 ## Development
 

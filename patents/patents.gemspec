@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "patents"
   spec.version       = Patents::VERSION
   spec.authors       = ["'Jennifer Stoos'"]
-  spec.email         = ["not disclosed"]
+  spec.email         = ["jstoos@bitlaw.com"]
 
   spec.summary       = %q{Patents takes a patent number and returns requested information about that patent.}
   spec.homepage      = "https://github.com/jstoos"
@@ -25,8 +25,8 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir        = "bin"
+  spec.executables   = ["patents_cli"]
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.16"

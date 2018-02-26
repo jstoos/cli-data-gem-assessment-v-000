@@ -19,10 +19,11 @@ class Patents::CLI
       input = gets.strip
 
       if valid_number?(input)
+        number = input.to_i
         @current_patent = Patents::Patent.new(number)
         puts "Patent number #{input} is entitled: #{current_patent.title}"
        menu  #Offer the user the chance to get information on that patent
-      end 
+      end
 
     end #End of until loop
   end #End of find_a_patent
