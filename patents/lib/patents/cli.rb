@@ -4,7 +4,7 @@ class Patents::CLI
 
   attr_accessor :current_patent, :attribute
 
-  @@attributes = [["Inventor", "inventor"], ["Application Number", "application_number"], ["Publication Date", "publication_date"], ["Filing Date", "filing_date"], ["Assignee", "assignee"], ["Primary Class", "primary_class"]]
+  @@attributes = [["Inventors", "inventors"], ["Application Number", "application_number"], ["Publication Date", "publication_date"], ["Filing Date", "filing_date"], ["Assignee", "assignee"], ["Primary Class", "primary_class"]]
 
   def call
     find_a_patent
@@ -47,8 +47,11 @@ class Patents::CLI
           number = gets.strip
         end
 
-      current_patent_info = @current_patent.send("#{@@attributes[number.to_i-1][1]}")
-      puts  "#{@@attributes[number.to_i-1][0]}: #{current_patent_info}"
+      if number != "7"
+        current_patent_info = @current_patent.send("#{@@attributes[number.to_i-1][1]}")
+        puts  "#{@@attributes[number.to_i-1][0]}: "
+        "#{current_patent_info.collect {|item| puts item}}"
+      end
 
       if number.to_i.between?(1, (@@attributes.size))
         more_information?
