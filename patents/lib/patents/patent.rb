@@ -23,7 +23,8 @@ class Patents::Patent
   def attributes
     @@attributes.each do |attribute|
       attribute_capitalize = (attribute.split("_").collect {|word| word.capitalize}).join(" ")
-      attribute_data = @doc.xpath('//div[contains(text(),"' + attribute_capitalize + '")]/following-sibling::div').text.strip
+      attribute_data = @doc.xpath('//div[contains(text(),"' + attribute_capitalize + '")]/following-sibling::div').text.strip.split("\n")
+      attribute_data = attribute_data.collect {|name| name.strip}
       self.send("#{attribute}=", attribute_data)
       binding.pry
     end
