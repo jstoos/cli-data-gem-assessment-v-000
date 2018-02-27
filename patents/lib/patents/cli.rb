@@ -21,8 +21,17 @@ class Patents::CLI
       if valid_number?(input)
         number = input.to_i
         @current_patent = Patents::Patent.new(number)
-        puts "Patent number #{input} is entitled: #{current_patent.title}"
-       menu  #Offer the user the chance to get information on that patent
+      binding.pry
+        if @current_patent.title != nil
+          puts "Patent number #{number} is entitled: #{@current_patent.title}"
+          puts ""
+          menu #Offer the user the chance to get information on that patent
+        else
+          puts ""
+          puts "That is not a valid patent number."
+          puts ""
+        end
+
       end
 
     end #End of until loop
@@ -49,8 +58,10 @@ class Patents::CLI
 
       if number != "7"
         current_patent_info = @current_patent.send("#{@@attributes[number.to_i-1][1]}")
+        puts ""
         puts  "#{@@attributes[number.to_i-1][0]}: "
         "#{current_patent_info.collect {|item| puts item}}"
+        puts ""
       end
 
       if number.to_i.between?(1, (@@attributes.size))
