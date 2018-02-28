@@ -17,21 +17,33 @@ class Patents::CLI
     until input == "exit" do #gets input from the user
       puts "Please enter a patent number: (to exit enter 'exit')"
       input = gets.strip
+      number = input.to_i
+      @current_patent = Patents::Patent.new(number) #creates a new patent object
 
       if valid_number?(input)
-        number = input.to_i
-        @current_patent = Patents::Patent.new(number) #creates a new patent object
-
-        if @current_patent.title != nil #restarts if there is no such patent
           puts "Patent number #{number} is entitled: #{@current_patent.title[0]}"
     #binding.pry
           puts ""
           menu #Offer the user the chance to get information on that patent
-        else
+      elsif input != "exit"
           puts ""
           puts "That is not a valid patent number."
           puts ""
-        end
+
+      #   if valid_number?(input)
+      #     number = input.to_i
+      #     @current_patent = Patents::Patent.new(number) #creates a new patent object
+      #
+      #     if @current_patent.title != nil #restarts if there is no such patent
+      #       puts "Patent number #{number} is entitled: #{@current_patent.title[0]}"
+      # #binding.pry
+      #       puts ""
+      #       menu #Offer the user the chance to get information on that patent
+      #     else
+      #       puts ""
+      #       puts "That is not a valid patent number."
+      #       puts ""
+      #     end
 
       end
 
@@ -39,7 +51,7 @@ class Patents::CLI
   end #End of find_a_patent
 
   def valid_number?(number)
-    number.to_i.between?(100000, 99999999)
+    number.to_i.between?(100000, 99999999) && @current_patent.title != nil
   end
 
   def menu
@@ -77,7 +89,7 @@ class Patents::CLI
     if response == "y"
       menu
     elsif response != "n"
-      puts "I don't understand. Would you like more information on this patent? (y/n)"
+      puts "I don't understand."
       more_information?
     end
   end
