@@ -6,28 +6,27 @@ class Patents::Patent
 
   @@attributes = ["title", "inventors", "application_number", "publication_date", "filing_date", "assignee", "primary_class"]
 
-  def initialize(number)
+  def initialize(number) #creates a new patent object
     @number = number
     get_page
   end
 
-  def get_page
+  def get_page #goes to the patent corresponding to the patent number entered
     url = "http://www.freepatentsonline.com/#{@number}.html"
 
-    #Rescue errors
-    begin
+    begin #Rescues errors
       file = open(url)
           # file = open(url, 'User-Agent' => 'Chrome')
       @doc = Nokogiri::HTML(file)
     rescue OpenURI::HTTPError => e
         @title = nil # handle 404 error
-    else
+    else # gets and assigns attributes if the patent does exits
       attributes
     end
 
   end
 
-  def attributes
+  def attributes # gets and assigns attributes for the patent object
     @@attributes.each do |attribute|
       attribute_capitalize = (attribute.split("_").collect {|word| word.capitalize}).join(" ")
       attribute_data = @doc.xpath('//div[contains(text(),"' + attribute_capitalize + '")]/following-sibling::div').text.strip.split("\n")
