@@ -9,30 +9,22 @@ class Patents::Patent
   def initialize(number)
     @number = number
     get_page
-    #attributes
-    #binding.pry
   end
 
   def get_page
     url = "http://www.freepatentsonline.com/#{@number}.html"
 
-    #Rescue 404 errors
+    #Rescue errors
     begin
       file = open(url)
-      @doc = Nokogiri::HTML(file) do
-        # handle doc
-      end
+          # file = open(url, 'User-Agent' => 'Chrome')
+      @doc = Nokogiri::HTML(file)
     rescue OpenURI::HTTPError => e
-      if e.message == '404 Not Found'
-        # handle 404 error
-      else
-        raise e
-        attributes
-      end
+        @title = nil # handle 404 error
+    else
+      attributes
     end
-    #end online idea
 
-    # file = open(url, 'User-Agent' => 'Chrome')
   end
 
   def attributes
@@ -41,7 +33,6 @@ class Patents::Patent
       attribute_data = @doc.xpath('//div[contains(text(),"' + attribute_capitalize + '")]/following-sibling::div').text.strip.split("\n")
       attribute_data = attribute_data.collect {|name| name.strip}
       self.send("#{attribute}=", attribute_data)
-      #binding.pry
     end
   end
 

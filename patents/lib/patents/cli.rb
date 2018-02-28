@@ -21,7 +21,7 @@ class Patents::CLI
       if valid_number?(input)
         number = input.to_i
         @current_patent = Patents::Patent.new(number)
-      binding.pry
+      #binding.pry
         if @current_patent.title != nil
           puts "Patent number #{number} is entitled: #{@current_patent.title}"
           puts ""

@@ -7,7 +7,3 @@ require "open-uri"
 
 
 require "pry"
-
-module Patents
-  # Your code goes here...
-end
