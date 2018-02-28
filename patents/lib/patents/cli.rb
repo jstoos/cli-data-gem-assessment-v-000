@@ -22,33 +22,16 @@ class Patents::CLI
 
       if valid_number?(input)
           puts "Patent number #{number} is entitled: #{@current_patent.title[0]}"
-    #binding.pry
           puts ""
           menu #Offer the user the chance to get information on that patent
       elsif input != "exit"
           puts ""
           puts "That is not a valid patent number."
           puts ""
-
-      #   if valid_number?(input)
-      #     number = input.to_i
-      #     @current_patent = Patents::Patent.new(number) #creates a new patent object
-      #
-      #     if @current_patent.title != nil #restarts if there is no such patent
-      #       puts "Patent number #{number} is entitled: #{@current_patent.title[0]}"
-      # #binding.pry
-      #       puts ""
-      #       menu #Offer the user the chance to get information on that patent
-      #     else
-      #       puts ""
-      #       puts "That is not a valid patent number."
-      #       puts ""
-      #     end
-
       end
 
-    end #End of until loop
-  end #End of find_a_patent
+    end
+  end
 
   def valid_number?(number)
     number.to_i.between?(100000, 99999999) && @current_patent.title != nil
@@ -57,19 +40,19 @@ class Patents::CLI
   def menu
     puts "What information would you like about this patent? (Please enter a number)"
     counter = 0
-    @@attributes_title.each do |attribute|
+    @@attributes_title.each do |attribute| #creating menu
       counter +=1
       puts "#{counter}. #{attribute}"
     end
       puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
 
-      number = gets.strip
+      number = gets.strip #making sure they are entering a number from the menu
         while !number.to_i.between?(1, (@@attributes_title.size + 1))
           puts "Please enter a number between 1 and 7:"
           number = gets.strip
         end
 
-      if number != "7"
+      if number != "7" #unless they enter 'exit' finds the requested attribute
         current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
         puts ""
         puts  "#{@@attributes_title[number.to_i-1]}: "
@@ -83,7 +66,7 @@ class Patents::CLI
 
   end
 
-  def more_information?
+  def more_information? #continues to offer more information
     puts "Would you like more information on this patent? (y/n)"
       response = gets.strip
     if response == "y"
