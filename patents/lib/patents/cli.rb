@@ -4,7 +4,9 @@ class Patents::CLI
 
   attr_accessor :current_patent, :attribute
 
-  @@attributes = [["Inventors", "inventors"], ["Application Number", "application_number"], ["Publication Date", "publication_date"], ["Filing Date", "filing_date"], ["Assignee", "assignee"], ["Primary Class", "primary_class"]]
+  #@@attributes_title = [["Inventors", "inventors"], ["Application Number", "application_number"], ["Publication Date", "publication_date"], ["Filing Date", "filing_date"], ["Assignee", "assignee"], ["Primary Class", "primary_class"]]
+  @@attributes_title = ["Inventors", "Application Number", "Publication Date", "Filing Date", "Assignee", "Primary Class"]
+
 
   def call
     find_a_patent
@@ -24,7 +26,7 @@ class Patents::CLI
 
         if @current_patent.title != nil #restarts if there is no such patent
           puts "Patent number #{number} is entitled: #{@current_patent.title[0]}"
-    binding.pry
+    #binding.pry
           puts ""
           menu #Offer the user the chance to get information on that patent
         else
@@ -45,27 +47,35 @@ class Patents::CLI
   def menu
     puts "What information would you like about this patent? (Please enter a number)"
     counter = 0
-    @@attributes.each do |attribute|
+    @@attributes_title.each do |attribute|
       counter +=1
-      puts "#{counter}. #{attribute[0]}"
+      puts "#{counter}. #{attribute}"
     end
-      puts "#{@@attributes.size+1}. Enter a New Patent number or exit"
+      puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
 
       number = gets.strip
-        while !number.to_i.between?(1, (@@attributes.size + 1))
+        while !number.to_i.between?(1, (@@attributes_title.size + 1))
           puts "Please enter a number between 1 and 7:"
           number = gets.strip
         end
 
+      # if number != "7"
+      #   current_patent_info = @current_patent.send("#{@@attributes[number.to_i-1][1]}")
+      #   puts ""
+      #   puts  "#{@@attributes[number.to_i-1][0]}: "
+      #   "#{current_patent_info.collect {|item| puts item}}"
+      #   puts ""
+      # end
+
       if number != "7"
-        current_patent_info = @current_patent.send("#{@@attributes[number.to_i-1][1]}")
+        current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
         puts ""
-        puts  "#{@@attributes[number.to_i-1][0]}: "
+        puts  "#{@@attributes_title[number.to_i-1]}: "
         "#{current_patent_info.collect {|item| puts item}}"
         puts ""
       end
 
-      if number.to_i.between?(1, (@@attributes.size))
+      if number.to_i.between?(1, (@@attributes_title.size))
         more_information?
       end
 

@@ -4,7 +4,11 @@ class Patents::Patent
 
   attr_accessor :doc, :number, :title, :inventors, :application_number, :publication_date, :filing_date, :assignee, :primary_class
 
-  @@attributes = ["title", "inventors", "application_number", "publication_date", "filing_date", "assignee", "primary_class"]
+    @@attributes = ["title", "inventors", "application_number", "publication_date", "filing_date", "assignee", "primary_class"]
+
+  def self.attributes
+    @@attributes
+  end
 
   def initialize(number) #creates a new patent object
     @number = number
