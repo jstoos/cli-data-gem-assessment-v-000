@@ -6,13 +6,14 @@ class Patents::Patent
 
     @@attributes = ["title", "inventors", "application_number", "publication_date", "filing_date", "assignee", "primary_class"]
 
-  def self.attributes
-    @@attributes
-  end
 
   def initialize(number) #creates a new patent object
     @number = number
     get_page
+  end
+
+  def self.attributes
+    @@attributes
   end
 
   def get_page #goes to the patent corresponding to the patent number entered

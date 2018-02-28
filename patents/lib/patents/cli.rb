@@ -4,9 +4,7 @@ class Patents::CLI
 
   attr_accessor :current_patent, :attribute
 
-  #@@attributes_title = [["Inventors", "inventors"], ["Application Number", "application_number"], ["Publication Date", "publication_date"], ["Filing Date", "filing_date"], ["Assignee", "assignee"], ["Primary Class", "primary_class"]]
   @@attributes_title = ["Inventors", "Application Number", "Publication Date", "Filing Date", "Assignee", "Primary Class"]
-
 
   def call
     find_a_patent
@@ -58,14 +56,6 @@ class Patents::CLI
           puts "Please enter a number between 1 and 7:"
           number = gets.strip
         end
-
-      # if number != "7"
-      #   current_patent_info = @current_patent.send("#{@@attributes[number.to_i-1][1]}")
-      #   puts ""
-      #   puts  "#{@@attributes[number.to_i-1][0]}: "
-      #   "#{current_patent_info.collect {|item| puts item}}"
-      #   puts ""
-      # end
 
       if number != "7"
         current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
