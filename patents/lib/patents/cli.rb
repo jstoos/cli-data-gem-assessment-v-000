@@ -7,10 +7,10 @@ class Patents::CLI
   @@attributes_title = ["Inventors", "Application Number", "Publication Date", "Filing Date", "Assignee", "Primary Class"]
 
   def call
-    find_a_patent
+    welcome
   end
 
-  def find_a_patent  #Begins the process of inviting the user to enter a patent number
+  def welcome  #Begins the process of inviting the user to enter a patent number
     input = ""
     patent_number = ""
 
@@ -21,7 +21,7 @@ class Patents::CLI
       puts "Please enter a patent number: (to exit enter 'exit')"
       input = gets.strip
       patent_number = input.to_i
-      @current_patent = Patents::Patent.new(patent_number) #creates a new patent object
+      create_a_patent(patent_number)
 
       if valid_patent_number?(input)
         if @current_patent.title[0] == nil
@@ -39,6 +39,10 @@ class Patents::CLI
           puts ""
       end
     end
+  end
+
+  def create_a_patent(patent_number)
+    @current_patent = Patents::Patent.new(patent_number) #creates a new patent object
   end
 
   def valid_patent_number?(number)
