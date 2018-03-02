@@ -12,18 +12,24 @@ class Patents::CLI
 
   def find_a_patent  #Begins the process of inviting the user to enter a patent number
     input = ""
-    number = ""
+    patent_number = ""
 
     until input == "exit" do #gets input from the user
       puts "Please enter a patent number: (to exit enter 'exit')"
       input = gets.strip
-      number = input.to_i
-      @current_patent = Patents::Patent.new(number) #creates a new patent object
+      patent_number = input.to_i
+      @current_patent = Patents::Patent.new(patent_number) #creates a new patent object
 
       if valid_number?(input)
-          puts "Patent number #{number} is entitled: #{@current_patent.title[0]}"
-          puts ""
-          menu #Offer the user the chance to get information on that patent
+        if @current_patent.title[0] == nil
+          puts "Unfortunatly that patent does not have a title"
+        else
+          puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
+        end
+        puts ""
+
+        menu #Offer the user the chance to get information on that patent
+
       elsif input != "exit"
           puts ""
           puts "That is not a valid patent number."
