@@ -55,12 +55,12 @@ class Patents::CLI
 
   def create_menu
     counter = 0
-    @@attributes_title.each do |attribute| #creating menu
-      counter +=1
-      if @current_patent.send("#{Patents::Patent.attributes[counter]}").empty?
-        puts "#{counter}. (#{attribute} is not available)"
+    @@attributes_title.each_with_index do |attribute, index| #creating menu
+      i = index + 1
+      if @current_patent.send("#{Patents::Patent.attributes[i]}").empty?
+        puts "#{i}. (#{attribute} is not available)"
       else
-      puts "#{counter}. #{attribute}"
+      puts "#{i}. #{attribute}"
     end
     end
       puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
