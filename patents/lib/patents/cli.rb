@@ -47,12 +47,9 @@ class Patents::CLI
     create_menu
 
     number = gets.strip #making sure they are entering a number from the menu
-      while !number.to_i.between?(1, (@@attributes_title.size + 1))
-        puts "Please enter a number between 1 and #{@@attributes_title.size + 1}:"
-        number = gets.strip
-      end
+    valid_index_number(number)
 
-    if number != "7" #unless they enter 'exit' finds the requested attribute
+    if number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
       current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
       puts ""
 
@@ -63,12 +60,12 @@ class Patents::CLI
         "#{current_patent_info.collect {|item| puts item}}"
         puts ""
       end
-
-    end
-
-    if number.to_i.between?(1, (@@attributes_title.size))
       more_information?
     end
+
+    # if number.to_i.between?(1, (@@attributes_title.size))
+    #   more_information?
+    # end
 
   end
 
@@ -85,6 +82,12 @@ class Patents::CLI
       puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
   end
 
+  def  valid_index_number(number)
+    while !number.to_i.between?(1, (@@attributes_title.size + 1))
+      puts "Please enter a number between 1 and #{@@attributes_title.size + 1}:"
+      number = gets.strip
+    end
+  end
 
   def more_information? #continues to offer more information
     puts "Would you like more information on this patent? (y/n)"
