@@ -94,7 +94,7 @@ class Patents::CLI
       puts ""
 
       if current_patent_info.empty?
-        puts "Unfortunately that information is not available."
+        puts "Unfortunately #{@@attributes_title[index_number.to_i-1]} is not available for this patent."
       else
         puts  "#{@@attributes_title[index_number.to_i-1]}: "
         "#{current_patent_info.collect {|item| puts item}}"
