@@ -54,7 +54,7 @@ class Patents::CLI
     create_menu
     index_number = gets.strip #making sure they are entering a number from the menu
     valid_index_number(index_number)
-    find_requested_attribute(index_number)
+    #find_requested_attribute(index_number)
   end
 
   def create_menu
@@ -75,6 +75,7 @@ class Patents::CLI
       puts "Please enter a number between 1 and #{@@attributes_title.size + 1}:"
       index_number = gets.strip
     end
+    find_requested_attribute(index_number)
   end
 
   def find_requested_attribute(index_number)
