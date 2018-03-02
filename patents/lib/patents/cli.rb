@@ -24,7 +24,7 @@ class Patents::CLI
       create_a_patent(patent_number)
 
       if valid_patent_number?(input)
-        if @current_patent.title[0] == nil
+        if @current_patent.title == nil
           puts "Unfortunatly that patent does not have a title"
         else
           puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
@@ -46,7 +46,7 @@ class Patents::CLI
   end
 
   def valid_patent_number?(number)
-    number.to_i.between?(100000, 99999999) && @current_patent.title != nil
+    number.to_i.between?(100000, 99999999) && @current_patent.title != "invalid"
   end
 
   def menu(patent_number)

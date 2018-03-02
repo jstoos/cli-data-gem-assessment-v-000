@@ -24,7 +24,7 @@ class Patents::Patent
           # file = open(url, 'User-Agent' => 'Chrome')
       @doc = Nokogiri::HTML(file)
     rescue OpenURI::HTTPError => e
-        @title = nil # handle 404 error
+        @title = "invalid" # handle 404 error
     else # gets and assigns attributes if the patent does exits
       attributes
     end
