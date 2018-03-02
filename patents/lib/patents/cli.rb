@@ -29,7 +29,6 @@ class Patents::CLI
           puts "That is not a valid patent number."
           puts ""
       end
-
     end
   end
 
@@ -39,32 +38,47 @@ class Patents::CLI
 
   def menu
     puts "What information would you like about this patent? (Please enter a number)"
-    counter = 0
-    @@attributes_title.each do |attribute| #creating menu
-      counter +=1
-      puts "#{counter}. #{attribute}"
-    end
-      puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
+    create_menu
 
-      number = gets.strip #making sure they are entering a number from the menu
-        while !number.to_i.between?(1, (@@attributes_title.size + 1))
-          puts "Please enter a number between 1 and 7:"
-          number = gets.strip
-        end
+    number = gets.strip #making sure they are entering a number from the menu
+      while !number.to_i.between?(1, (@@attributes_title.size + 1))
+        puts "Please enter a number between 1 and #{@@attributes_title.size + 1}:"
+        number = gets.strip
+      end
 
-      if number != "7" #unless they enter 'exit' finds the requested attribute
-        current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
-        puts ""
+    if number != "7" #unless they enter 'exit' finds the requested attribute
+      current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
+      puts ""
+
+      if current_patent_info.empty?
+        puts "Unfortunately that information is not available."
+      else
         puts  "#{@@attributes_title[number.to_i-1]}: "
         "#{current_patent_info.collect {|item| puts item}}"
         puts ""
       end
 
-      if number.to_i.between?(1, (@@attributes_title.size))
-        more_information?
-      end
+    end
+
+    if number.to_i.between?(1, (@@attributes_title.size))
+      more_information?
+    end
 
   end
+
+  def create_menu
+    counter = 0
+    @@attributes_title.each do |attribute| #creating menu
+      counter +=1
+      if @current_patent.send("#{Patents::Patent.attributes[counter]}").empty?
+        puts "#{counter}. (#{attribute} is not available)"
+      else
+      puts "#{counter}. #{attribute}"
+    end
+    end
+      puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
+  end
+
 
   def more_information? #continues to offer more information
     puts "Would you like more information on this patent? (y/n)"
