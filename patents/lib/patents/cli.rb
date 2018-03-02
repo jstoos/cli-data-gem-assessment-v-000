@@ -20,7 +20,7 @@ class Patents::CLI
       patent_number = input.to_i
       @current_patent = Patents::Patent.new(patent_number) #creates a new patent object
 
-      if valid_number?(input)
+      if valid_patent_number?(input)
         if @current_patent.title[0] == nil
           puts "Unfortunatly that patent does not have a title"
         else
@@ -38,7 +38,7 @@ class Patents::CLI
     end
   end
 
-  def valid_number?(number)
+  def valid_patent_number?(number)
     number.to_i.between?(100000, 99999999) && @current_patent.title != nil
   end
 
