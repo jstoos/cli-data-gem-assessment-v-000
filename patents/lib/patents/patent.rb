@@ -5,7 +5,7 @@ class Patents::Patent
   attr_accessor :doc, :number, :title, :inventors, :application_number, :publication_date, :filing_date, :assignee, :primary_class
 
   @@attributes = ["title", "inventors", "application_number", "publication_date", "filing_date", "assignee", "primary_class"]
-  @@attributes_capitalized = []
+
 
   def initialize(number) #creates a new patent object
     @number = number
@@ -14,10 +14,6 @@ class Patents::Patent
 
   def self.attributes
     @@attributes
-  end
-
-  def self.attributes_capitalized
-    @@attributes_capitalized
   end
 
   def get_page #goes to the patent corresponding to the patent number entered
@@ -38,7 +34,6 @@ class Patents::Patent
   def attributes # gets and assigns attributes for the patent object
     @@attributes.each do |attribute|
       attribute_capitalize = attribute_capitalize(attribute)
-      #attribute_capitalize = (attribute.split("_").collect {|word| word.capitalize}).join(" ")
       attribute_data = @doc.xpath('//div[contains(text(),"' + attribute_capitalize + '")]/following-sibling::div').text.strip.split("\n")
       attribute_data = attribute_data.collect {|name| name.strip}
       self.send("#{attribute}=", attribute_data)
@@ -47,7 +42,6 @@ class Patents::Patent
 
   def attribute_capitalize(attribute)
       attribute_capitalize = (attribute.split("_").collect {|word| word.capitalize}).join(" ")
-      @@attributes_capitalized << attribute_capitalize
       attribute_capitalize
   end
 
