@@ -2,7 +2,7 @@
 
 class Patents::CLI
 
-  attr_accessor :current_patent, :attribute
+  attr_accessor :current_patent
 
   @@attributes_title = []
 
@@ -62,7 +62,6 @@ class Patents::CLI
     create_menu
     index_number = gets.strip #making sure they are entering a number from the menu
     valid_index_number(index_number)
-    #find_requested_attribute(index_number)
   end
 
   def create_menu
