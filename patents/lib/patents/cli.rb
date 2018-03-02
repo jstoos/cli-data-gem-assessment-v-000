@@ -48,25 +48,22 @@ class Patents::CLI
 
     number = gets.strip #making sure they are entering a number from the menu
     valid_index_number(number)
+    find_requested_attribute(number)
 
-    if number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
-      current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
-      puts ""
-
-      if current_patent_info.empty?
-        puts "Unfortunately that information is not available."
-      else
-        puts  "#{@@attributes_title[number.to_i-1]}: "
-        "#{current_patent_info.collect {|item| puts item}}"
-        puts ""
-      end
-      more_information?
-    end
-
-    # if number.to_i.between?(1, (@@attributes_title.size))
+    # if number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
+    #   current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
+    #   puts ""
+    #
+    #   if current_patent_info.empty?
+    #     puts "Unfortunately that information is not available."
+    #   else
+    #     puts  "#{@@attributes_title[number.to_i-1]}: "
+    #     "#{current_patent_info.collect {|item| puts item}}"
+    #     puts ""
+    #   end
+    #
     #   more_information?
     # end
-
   end
 
   def create_menu
@@ -87,6 +84,22 @@ class Patents::CLI
       puts "Please enter a number between 1 and #{@@attributes_title.size + 1}:"
       number = gets.strip
     end
+  end
+
+  def find_requested_attribute(number)
+    if number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
+      current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
+      puts ""
+
+      if current_patent_info.empty?
+        puts "Unfortunately that information is not available."
+      else
+        puts  "#{@@attributes_title[number.to_i-1]}: "
+        "#{current_patent_info.collect {|item| puts item}}"
+        puts ""
+      end
+    end
+    more_information?
   end
 
   def more_information? #continues to offer more information
