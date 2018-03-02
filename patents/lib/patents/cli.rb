@@ -4,9 +4,10 @@ class Patents::CLI
 
   attr_accessor :current_patent, :attribute
 
-  @@attributes_title = ["Inventors", "Application Number", "Publication Date", "Filing Date", "Assignee", "Primary Class"]
+  @@attributes_title = []
 
   def call
+    create_attributes_title
     patent_finder
   end
 
@@ -24,7 +25,7 @@ class Patents::CLI
       create_a_patent(patent_number)
 
       if valid_patent_number?(input)
-        if @current_patent.title == nil
+        if @current_patent.title == []
           puts "Unfortunatly that patent does not have a title"
         else
           puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
@@ -45,6 +46,13 @@ class Patents::CLI
     @current_patent = Patents::Patent.new(patent_number) #creates a new patent object
   end
 
+  def create_attributes_title
+      Patents::Patent.attributes.each do |attribute|
+        @@attributes_title << (attribute.split("_").collect {|word| word.capitalize}).join(" ")
+      end
+      @@attributes_title.shift
+  end
+
   def valid_patent_number?(number)
     number.to_i.between?(100000, 99999999) && @current_patent.title != "invalid"
   end
@@ -61,18 +69,20 @@ class Patents::CLI
     counter = 0
     @@attributes_title.each_with_index do |attribute, index| #creating menu
       i = index + 1
-      if @current_patent.send("#{Patents::Patent.attributes[i]}").empty?
-        puts "#{i}. (#{attribute} is not available)"
-      else
-      puts "#{i}. #{attribute}"
-    end
+      if attribute != "Title" && i <= @@attributes_title.size
+        if @current_patent.send("#{Patents::Patent.attributes[i]}").empty?
+          puts "#{i}. (#{attribute} is not available)"
+        else
+          puts "#{i}. #{attribute}"
+        end
+      end
     end
       puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
   end
 
   def  valid_index_number(index_number)
-    while !index_number.to_i.between?(1, (@@attributes_title.size + 1))
-      puts "Please enter a number between 1 and #{@@attributes_title.size + 1}:"
+    while !index_number.to_i.between?(1, (@@attributes_title.size+1))
+      puts "Please enter a number between 1 and #{@@attributes_title.size+1}:"
       index_number = gets.strip
     end
     find_requested_attribute(index_number)
