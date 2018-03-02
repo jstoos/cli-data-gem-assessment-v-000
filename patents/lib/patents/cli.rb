@@ -14,6 +14,9 @@ class Patents::CLI
     input = ""
     patent_number = ""
 
+    puts ""
+    puts "Welcome to the Patent Finder Gem!"
+
     until input == "exit" do #gets input from the user
       puts "Please enter a patent number: (to exit enter 'exit')"
       input = gets.strip
@@ -28,11 +31,11 @@ class Patents::CLI
         end
         puts ""
 
-        menu #Offer the user the chance to get information on that patent
+        menu(patent_number) #Offer the user the chance to get information on that patent
 
       elsif input != "exit"
           puts ""
-          puts "That is not a valid patent number."
+          puts "Whoops! That is not a valid patent number."
           puts ""
       end
     end
@@ -42,28 +45,12 @@ class Patents::CLI
     number.to_i.between?(100000, 99999999) && @current_patent.title != nil
   end
 
-  def menu
-    puts "What information would you like about this patent? (Please enter a number)"
+  def menu(patent_number)
+    puts "What information would you like about patent number #{patent_number}? (Please enter a number)"
     create_menu
-
-    number = gets.strip #making sure they are entering a number from the menu
-    valid_index_number(number)
-    find_requested_attribute(number)
-
-    # if number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
-    #   current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
-    #   puts ""
-    #
-    #   if current_patent_info.empty?
-    #     puts "Unfortunately that information is not available."
-    #   else
-    #     puts  "#{@@attributes_title[number.to_i-1]}: "
-    #     "#{current_patent_info.collect {|item| puts item}}"
-    #     puts ""
-    #   end
-    #
-    #   more_information?
-    # end
+    index_number = gets.strip #making sure they are entering a number from the menu
+    valid_index_number(index_number)
+    find_requested_attribute(index_number)
   end
 
   def create_menu
@@ -79,37 +66,38 @@ class Patents::CLI
       puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
   end
 
-  def  valid_index_number(number)
-    while !number.to_i.between?(1, (@@attributes_title.size + 1))
+  def  valid_index_number(index_number)
+    while !index_number.to_i.between?(1, (@@attributes_title.size + 1))
       puts "Please enter a number between 1 and #{@@attributes_title.size + 1}:"
-      number = gets.strip
+      index_number = gets.strip
     end
   end
 
-  def find_requested_attribute(number)
-    if number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
-      current_patent_info = @current_patent.send("#{Patents::Patent.attributes[number.to_i]}")
+  def find_requested_attribute(index_number)
+    if index_number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
+      current_patent_info = @current_patent.send("#{Patents::Patent.attributes[index_number.to_i]}")
       puts ""
 
       if current_patent_info.empty?
         puts "Unfortunately that information is not available."
       else
-        puts  "#{@@attributes_title[number.to_i-1]}: "
+        puts  "#{@@attributes_title[index_number.to_i-1]}: "
         "#{current_patent_info.collect {|item| puts item}}"
         puts ""
       end
+      
+      more_information?(index_number.to_i)
     end
-    more_information?
   end
 
-  def more_information? #continues to offer more information
+  def more_information?(list_number) #continues to offer more information
     puts "Would you like more information on this patent? (y/n)"
       response = gets.strip
     if response == "y"
-      menu
+      menu(list_number)
     elsif response != "n"
       puts "I don't understand."
-      more_information?
+      more_information?(list_number)
     end
   end
 
