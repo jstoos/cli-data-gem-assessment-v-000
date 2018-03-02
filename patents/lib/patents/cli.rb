@@ -85,7 +85,7 @@ class Patents::CLI
         "#{current_patent_info.collect {|item| puts item}}"
         puts ""
       end
-      
+
       more_information?(index_number.to_i)
     end
   end
@@ -94,7 +94,7 @@ class Patents::CLI
     puts "Would you like more information on this patent? (y/n)"
       response = gets.strip
     if response == "y"
-      menu(list_number)
+      menu(@current_patent.number)
     elsif response != "n"
       puts "I don't understand."
       more_information?(list_number)
