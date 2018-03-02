@@ -7,10 +7,10 @@ class Patents::CLI
   @@attributes_title = ["Inventors", "Application Number", "Publication Date", "Filing Date", "Assignee", "Primary Class"]
 
   def call
-    welcome
+    patent_finder
   end
 
-  def welcome  #Begins the process of inviting the user to enter a patent number
+  def patent_finder  #Begins the process of inviting the user to enter a patent number
     input = ""
     patent_number = ""
 
