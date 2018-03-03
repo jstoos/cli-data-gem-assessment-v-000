@@ -42,7 +42,6 @@ class Patents::Patent
 
   def attribute_capitalize(attribute)
       attribute_capitalize = (attribute.split("_").collect {|word| word.capitalize}).join(" ")
-      attribute_capitalize
   end
 
 end
