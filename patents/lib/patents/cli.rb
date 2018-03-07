@@ -43,7 +43,9 @@ class Patents::CLI
   end
 
   def create_a_patent(patent_number)
-    @current_patent = Patents::Patent.new(patent_number) #creates a new patent object
+    @current_patent = Patents::Scraper.new(patent_number) #scrapes appropriate patent page
+    #binding.pry
+    #@current_patent = Patents::Patent.new(patent_number) #creates a new patent object
   end
 
   def create_attributes_title
@@ -68,7 +70,8 @@ class Patents::CLI
     counter = 0
     @@attributes_title.each_with_index do |attribute, index| #creating menu
       i = index + 1
-      if attribute != "Title" && i <= @@attributes_title.size
+      #if attribute != "Title" &&
+      if i <= @@attributes_title.size
         if @current_patent.send("#{Patents::Patent.attributes[i]}").empty?
           puts "#{i}. (#{attribute} is not available)"
         else

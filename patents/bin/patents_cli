@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 require "./patents/lib/patents"
 
 Patents::CLI.new.call
