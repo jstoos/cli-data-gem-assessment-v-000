@@ -24,33 +24,49 @@ class Patents::CLI
       patent_number = input.to_i
       create_or_get_a_patent(patent_number) #scrape and make a new patent if it doesn't exist
 
+      create_title_and_menu(input, patent_number)
+      # if valid_patent_number?(input) #see if the patent is valid and if so give appropriate feedback on the title
+      #   if @current_patent.title == []
+      #     puts "Unfortunatly that patent does not have a title"
+      #   else
+      #     puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
+      #   end
+      #   puts ""
 
-      if valid_patent_number?(input) #see if the patent is valid and if so give appropriate feedback on the title
-        if @current_patent.title == []
-          puts "Unfortunatly that patent does not have a title"
-        else
-          puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
-        end
-        puts ""
-
-        menu(patent_number) #Offer the user the chance to get information on that patent
-
-      elsif input != "exit"
-          puts ""
-          puts "Whoops! That is not a valid patent number."
-          puts ""
-      end
+      #   menu(patent_number) #Offer the user the chance to get information on that patent
+      #
+      # elsif input != "exit"
+      #     puts ""
+      #     puts "Whoops! That is not a valid patent number."
+      #     puts ""
+      # end
     end
   end
 
   def create_or_get_a_patent(patent_number)
-    binding.pry
     if !Patents::Patent.patents_list.any? {|patent| patent.number == patent_number}
       @current_patent = Patents::Scraper.new(patent_number).patent #scrapes appropriate patent page
     else
       @current_patent = Patents::Patent.patents_list.find {|patent| patent.number = patent_number}
     end
   end
+
+ def create_title_and_menu(input, patent_number)
+   if valid_patent_number?(input) #see if the patent is valid and if so give appropriate feedback on the title
+     if @current_patent.title == []
+       puts "Unfortunatly that patent does not have a title"
+     else
+       puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
+     end
+     puts ""
+     menu(patent_number) #Offer the user the chance to get information on that patent
+
+   elsif input != "exit"
+       puts ""
+       puts "Whoops! That is not a valid patent number."
+       puts ""
+   end
+ end
 
   def create_attributes_title
       Patents::Patent.attributes.each do |attribute|
