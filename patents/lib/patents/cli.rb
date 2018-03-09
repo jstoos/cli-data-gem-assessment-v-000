@@ -2,7 +2,7 @@
 
 class Patents::CLI
 
-  attr_accessor :current_patent
+  attr_accessor :current_patent, :current_patent_list
 
   @@attributes_title = []
 
@@ -22,9 +22,10 @@ class Patents::CLI
       puts "Please enter a patent number: (to exit enter 'exit')"
       input = gets.strip
       patent_number = input.to_i
-      create_a_patent(patent_number)
+      create_or_get_a_patent(patent_number) #scrape and make a new patent if it doesn't exist
 
-      if valid_patent_number?(input)
+
+      if valid_patent_number?(input) #see if the patent is valid and if so give appropriate feedback on the title
         if @current_patent.title == []
           puts "Unfortunatly that patent does not have a title"
         else
@@ -42,10 +43,13 @@ class Patents::CLI
     end
   end
 
-  def create_a_patent(patent_number)
-    @current_patent = Patents::Scraper.new(patent_number) #scrapes appropriate patent page
-    #binding.pry
-    #@current_patent = Patents::Patent.new(patent_number) #creates a new patent object
+  def create_or_get_a_patent(patent_number)
+    binding.pry
+    if !Patents::Patent.patents_list.any? {|patent| patent.number == patent_number}
+      @current_patent = Patents::Scraper.new(patent_number).patent #scrapes appropriate patent page
+    else
+      @current_patent = Patents::Patent.patents_list.find {|patent| patent.number = patent_number}
+    end
   end
 
   def create_attributes_title
@@ -63,7 +67,7 @@ class Patents::CLI
     puts "What information would you like about patent number #{patent_number}? (Please enter a number)"
     create_menu
     index_number = gets.strip #making sure they are entering a number from the menu
-    valid_index_number(index_number)
+    valid_index_number(index_number) #makes sure the menu choice is a valid number and if so retrieves attribute
   end
 
   def create_menu
@@ -82,7 +86,7 @@ class Patents::CLI
       puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
   end
 
-  def  valid_index_number(index_number)
+  def  valid_index_number(index_number) #if index number is valid, retrieves attribute
     while !index_number.to_i.between?(1, (@@attributes_title.size+1))
       puts "Please enter a number between 1 and #{@@attributes_title.size+1}:"
       index_number = gets.strip
