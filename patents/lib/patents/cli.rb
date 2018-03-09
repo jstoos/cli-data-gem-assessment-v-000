@@ -92,26 +92,43 @@ class Patents::CLI
       puts "Please enter a number between 1 and #{@@attributes_title.size+2}:"
       index_number = gets.strip
     end
-    find_requested_attribute(index_number)
+    find_requested_attribute(index_number.to_i)
   end
 
   def find_requested_attribute(index_number)
-    if index_number.to_i < @@attributes_title.size+1 #unless they enter 'exit' or 'list' finds the requested attribute
-      current_patent_info = @current_patent.send("#{Patents::Patent.attributes[index_number.to_i]}")
+    if index_number < @@attributes_title.size+1 #unless they enter 'exit' or 'list' finds the requested attribute
+      current_patent_info = @current_patent.send("#{Patents::Patent.attributes[index_number]}")
       puts ""
 
       if current_patent_info.empty?
-        puts "Unfortunately #{@@attributes_title[index_number.to_i-1]} is not available for this patent."
+        puts "Unfortunately #{@@attributes_title[index_number-1]} is not available for this patent."
       else
-        puts  "#{@@attributes_title[index_number.to_i-1]}: "
+        puts  "#{@@attributes_title[index_number-1]}: "
         "#{current_patent_info.collect {|item| puts item}}"
         puts ""
       end
-      more_information?(index_number.to_i)
+      more_information?(index_number)
 
-    elsif index_number.to_i == 7
+    elsif index_number == 7
       list?
     end
+
+    # if index_number.to_i < @@attributes_title.size+1 #unless they enter 'exit' or 'list' finds the requested attribute
+    #   current_patent_info = @current_patent.send("#{Patents::Patent.attributes[index_number.to_i]}")
+    #   puts ""
+    #
+    #   if current_patent_info.empty?
+    #     puts "Unfortunately #{@@attributes_title[index_number.to_i-1]} is not available for this patent."
+    #   else
+    #     puts  "#{@@attributes_title[index_number.to_i-1]}: "
+    #     "#{current_patent_info.collect {|item| puts item}}"
+    #     puts ""
+    #   end
+    #   more_information?(index_number.to_i)
+    #
+    # elsif index_number.to_i == 7
+    #   list?
+    # end
 
   end
 
