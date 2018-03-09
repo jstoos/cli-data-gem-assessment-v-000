@@ -18,7 +18,7 @@ class Patents::Scraper
           # file = open(url, 'User-Agent' => 'Chrome')
       @doc = Nokogiri::HTML(file)
     rescue OpenURI::HTTPError => e
-        @title = "invalid" # handle 404 error
+        @patent.title = "invalid" # handle 404 error
     else # gets and assigns attributes if the patent does exits
       attributes
     end

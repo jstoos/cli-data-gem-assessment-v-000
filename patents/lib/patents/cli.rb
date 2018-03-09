@@ -52,8 +52,8 @@ class Patents::CLI
   end
 
  def create_title_and_menu(input, patent_number)
-   if valid_patent_number?(input) #see if the patent is valid and if so give appropriate feedback on the title
-     if @current_patent.title == []
+   if valid_patent_number?(patent_number) #see if the patent is valid and if so give appropriate feedback on the title
+     if @current_patent.title == []  #|| @current_patent.title == nil
        puts "Unfortunatly that patent does not have a title"
      else
        puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
