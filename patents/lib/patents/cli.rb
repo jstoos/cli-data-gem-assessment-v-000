@@ -108,10 +108,9 @@ class Patents::CLI
         puts ""
       end
       more_information?(index_number.to_i)
-      
+
     elsif index_number.to_i == 7
       list?
-      more_information?(index_number.to_i)
     end
 
   end
@@ -132,11 +131,13 @@ class Patents::CLI
     # puts "Would you like a list of the patents you have searched? (y/n)"
     # input = gets.strip
     # if input == "y"
-      display_list = Patents::Patent.patents_list.collect {|patent| patent.number}
-      puts ""
-      puts "Previous numbers searched:"
-      display_list.each {|number| puts "#{number}"}
-    #end
+
+    puts "Previous numbers searched:"
+    Patents::Patent.patents_list.each do |patent|
+      if !(patent.title == "invalid")
+        puts " #{patent.number}"
+      end
+    end
     puts ""
   end
 
