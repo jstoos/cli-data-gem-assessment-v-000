@@ -23,23 +23,7 @@ class Patents::CLI
       input = gets.strip
       patent_number = input.to_i
       create_or_get_a_patent(patent_number) #scrape and make a new patent if it doesn't exist
-
-      create_title_and_menu(input, patent_number)
-      # if valid_patent_number?(input) #see if the patent is valid and if so give appropriate feedback on the title
-      #   if @current_patent.title == []
-      #     puts "Unfortunatly that patent does not have a title"
-      #   else
-      #     puts "Patent number #{patent_number} is entitled: #{@current_patent.title[0]}"
-      #   end
-      #   puts ""
-
-      #   menu(patent_number) #Offer the user the chance to get information on that patent
-      #
-      # elsif input != "exit"
-      #     puts ""
-      #     puts "Whoops! That is not a valid patent number."
-      #     puts ""
-      # end
+      display_title_and_menu(input, patent_number)
     end
   end
 
@@ -51,7 +35,7 @@ class Patents::CLI
     end
   end
 
- def create_title_and_menu(input, patent_number)
+ def display_title_and_menu(input, patent_number)
    if valid_patent_number?(patent_number) #see if the patent is valid and if so give appropriate feedback on the title
      if @current_patent.title == []  #|| @current_patent.title == nil
        puts "Unfortunatly that patent does not have a title"
@@ -99,19 +83,20 @@ class Patents::CLI
         end
       end
     end
-      puts "#{@@attributes_title.size+1}. Enter a New Patent number or exit"
+      puts "#{@@attributes_title.size+1}. List of patent searches"
+      puts "#{@@attributes_title.size+2}. Enter a New Patent number or exit"
   end
 
   def  valid_index_number(index_number) #if index number is valid, retrieves attribute
-    while !index_number.to_i.between?(1, (@@attributes_title.size+1))
-      puts "Please enter a number between 1 and #{@@attributes_title.size+1}:"
+    while !index_number.to_i.between?(1, (@@attributes_title.size+2))
+      puts "Please enter a number between 1 and #{@@attributes_title.size+2}:"
       index_number = gets.strip
     end
     find_requested_attribute(index_number)
   end
 
   def find_requested_attribute(index_number)
-    if index_number.to_i != @@attributes_title.size+1 #unless they enter 'exit' finds the requested attribute
+    if index_number.to_i < @@attributes_title.size+1 #unless they enter 'exit' or 'list' finds the requested attribute
       current_patent_info = @current_patent.send("#{Patents::Patent.attributes[index_number.to_i]}")
       puts ""
 
@@ -122,9 +107,13 @@ class Patents::CLI
         "#{current_patent_info.collect {|item| puts item}}"
         puts ""
       end
-
+      more_information?(index_number.to_i)
+      
+    elsif index_number.to_i == 7
+      list?
       more_information?(index_number.to_i)
     end
+
   end
 
   def more_information?(list_number) #continues to offer more information
@@ -136,6 +125,19 @@ class Patents::CLI
       puts "I don't understand."
       more_information?(list_number)
     end
+  end
+
+  def list?
+    puts ""
+    # puts "Would you like a list of the patents you have searched? (y/n)"
+    # input = gets.strip
+    # if input == "y"
+      display_list = Patents::Patent.patents_list.collect {|patent| patent.number}
+      puts ""
+      puts "Previous numbers searched:"
+      display_list.each {|number| puts "#{number}"}
+    #end
+    puts ""
   end
 
 end #End of class
