@@ -128,10 +128,6 @@ class Patents::CLI
 
   def list?
     puts ""
-    # puts "Would you like a list of the patents you have searched? (y/n)"
-    # input = gets.strip
-    # if input == "y"
-
     puts "Previous numbers searched:"
     Patents::Patent.patents_list.each do |patent|
       if !(patent.title == "invalid")
