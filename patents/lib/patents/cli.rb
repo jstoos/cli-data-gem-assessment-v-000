@@ -129,8 +129,7 @@ class Patents::CLI
     puts ""
     puts "Previous numbers searched:"
     Patents::Patent.patents_list.each do |patent|
-      #if !(patent.title == "invalid")
-      if valid_patent_number?(patent.number)
+      if !(patent.title == "invalid")
         puts " #{patent.number}"
       end
     end
