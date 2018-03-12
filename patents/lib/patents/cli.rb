@@ -112,24 +112,6 @@ class Patents::CLI
     elsif index_number == 7
       list?
     end
-
-    # if index_number.to_i < @@attributes_title.size+1 #unless they enter 'exit' or 'list' finds the requested attribute
-    #   current_patent_info = @current_patent.send("#{Patents::Patent.attributes[index_number.to_i]}")
-    #   puts ""
-    #
-    #   if current_patent_info.empty?
-    #     puts "Unfortunately #{@@attributes_title[index_number.to_i-1]} is not available for this patent."
-    #   else
-    #     puts  "#{@@attributes_title[index_number.to_i-1]}: "
-    #     "#{current_patent_info.collect {|item| puts item}}"
-    #     puts ""
-    #   end
-    #   more_information?(index_number.to_i)
-    #
-    # elsif index_number.to_i == 7
-    #   list?
-    # end
-
   end
 
   def more_information?(list_number) #continues to offer more information
@@ -147,7 +129,8 @@ class Patents::CLI
     puts ""
     puts "Previous numbers searched:"
     Patents::Patent.patents_list.each do |patent|
-      if !(patent.title == "invalid")
+      #if !(patent.title == "invalid")
+      if valid_patent_number?(patent.number)
         puts " #{patent.number}"
       end
     end
