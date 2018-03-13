@@ -128,14 +128,14 @@ class Patents::CLI
   def list?
     puts ""
     puts "Previous numbers searched:"
-binding.pry
-    # Patents::Patent.patents_list[-1, -2]
-    #   #if !(patent.title == "invalid")
-    #   if valid_patent_number?(patent.number)
-    #     puts " #{patent.number}"
-    #   end
-    # end
-    
+
+    Patents::Patent.patents_list.last(2).each do |patent|
+     #if !(patent.title == "invalid")
+       if valid_patent_number?(patent.number)
+         puts " #{patent.number}"
+       end
+     end
+
     # Patents::Patent.patents_list.each do |patent|
     #   #if !(patent.title == "invalid")
     #   if valid_patent_number?(patent.number)
